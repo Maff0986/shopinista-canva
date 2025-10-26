@@ -1,0 +1,26 @@
+{
+  "name": "Shopinista Canva App",
+  "description": "Crea, importa y diseña más rápido con IA para ShopinistaMeta y ShopinistaMuebles.",
+  "version": "1.0.0",
+  "icon": {
+    "32": "icons/icon-32.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png"
+  },
+  "capabilities": {
+    "edit_design": {
+      "actions": ["render"]
+    }
+  },
+  "entrypoint": {
+    "bundle": "https://maff0986.github.io/shopinista-canva/main.js"
+  },
+  "permissions": {
+    "intents": [
+      "edit_design:render",
+      "content_generation:generate_text",
+      "assets:import",
+      "data:read"
+    ]
+  }
+}
