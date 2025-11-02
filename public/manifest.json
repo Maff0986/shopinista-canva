@@ -13,7 +13,7 @@
     }
   },
   "entrypoint": {
-    "bundle": "https://maff0986.github.io/shopinista-canva/main.js"
+    "bundle": "https://shopinista-canva.vercel.app/"
   },
   "permissions": {
     "intents": [
