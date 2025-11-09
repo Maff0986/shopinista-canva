@@ -9,7 +9,7 @@ Aplicación avanzada de Canva creada por Marco (ShopinistaMeta / ShopinistaMuebl
 
 ## 🚀 Scripts
 - \
-pm run dev\ — Ejecuta modo desarrollo (localhost:5173)
+pm run dev\ — Ejecuta modo desarrollo (localhost:8080)
 - \
 pm run build\ — Compila para producción
 - \
