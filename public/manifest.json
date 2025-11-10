@@ -16,7 +16,9 @@
   ],
   "permissions": {
     "network": {
-      "urls": ["*"]
+      "urls": [
+        "*"
+      ]
     },
     "intents": [
       "edit_design:render",
