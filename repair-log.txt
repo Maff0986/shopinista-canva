@@ -1,0 +1,12 @@
+[11:02:24 p.m.] === 🔧 INICIO DEL SCRIPT DE REPARACIÓN SHOPINISTA-CANVA ===
+[11:02:25 p.m.] → Limpieza de caché npm
+[11:02:31 p.m.] ✔️  Limpieza de caché npm completado correctamente.
+[11:02:31 p.m.] → Instalando base Vite + React
+[11:02:38 p.m.] ❌ ERROR en: Instalando base Vite + React
+Command failed: npm install vite@latest react react-dom
+[11:51:21 p.m.] === 🔧 INICIO DEL SCRIPT DE REPARACIÓN SHOPINISTA-CANVA ===
+[11:51:21 p.m.] → Limpieza de caché npm
+[11:51:27 p.m.] ✔️  Limpieza de caché npm completado correctamente.
+[11:51:27 p.m.] → Instalando base Vite + React
+[11:51:33 p.m.] ❌ ERROR en: Instalando base Vite + React
+Command failed: npm install vite@latest react react-dom
