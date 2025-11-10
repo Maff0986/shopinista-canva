@@ -2,8 +2,12 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
+    lib: {
+      entry: "src/canva-entry.ts",
+      formats: ["es"],
+      fileName: () => "app"
+    },
     rollupOptions: {
-      input: "src/canva-app.ts",
       external: ["@canva/app-sdk"]
     },
     outDir: "dist"

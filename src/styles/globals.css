@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html, body {
+  @apply bg-neutral-50 text-neutral-800 font-sans;
+  font-smooth: always;
+}
+
+h1, h2, h3, h4 {
+  @apply font-display text-neutral-900;
+}
+
+button {
+  @apply px-4 py-2 rounded-xl font-medium transition-all duration-200 ease-in-out-soft;
+}
+
+button.primary {
+  @apply bg-primary text-white hover:bg-secondary shadow-soft hover:shadow-glow;
+}
+
+button.outline {
+  @apply border border-primary text-primary hover:bg-primary hover:text-white;
+}

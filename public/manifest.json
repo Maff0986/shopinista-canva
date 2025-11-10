@@ -1,26 +1,36 @@
 {
-  "name": "Shopinista Canva App",
-  "description": "Crea, importa y diseña más rápido con IA para ShopinistaMeta y ShopinistaMuebles.",
-  "version": "1.0.0",
+  "name": "Shopinista Canva Integration",
+  "description": "Generador de contenido visual desde feeds y plantillas Canva.",
+  "version": "1.0.3",
+  "manifest_version": 1,
   "icon": {
-    "32": "icons/icon-32.png",
-    "64": "icons/icon-64.png",
-    "128": "icons/icon-128.png"
+    "dark": "https://shopinista-canva.vercel.app/icons/icon-dark.png",
+    "light": "https://shopinista-canva.vercel.app/icons/icon-light.png"
   },
-  "capabilities": {
-    "edit_design": {
-      "actions": ["render"]
+  "base_url": "https://shopinista-canva.vercel.app",
+  "activities": [
+    {
+      "activity": "edit_design:render",
+      "url": "/app.js"
     }
-  },
-  "entrypoint": {
-    "bundle": "https://shopinista-canva.vercel.app/"
-  },
+  ],
   "permissions": {
+    "network": {
+      "urls": ["*"]
+    },
     "intents": [
       "edit_design:render",
       "content_generation:generate_text",
       "assets:import",
       "data:read"
     ]
+  },
+  "entrypoint": {
+    "bundle": "https://shopinista-canva.vercel.app/"
+  },
+  "developer": {
+    "name": "Shopinista",
+    "website": "https://shopinista.com",
+    "email": "support@shopinista.com"
   }
 }

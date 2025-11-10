@@ -1,4 +1,4 @@
-import "./canva-app.ts"; 
+import { registerApp } from "@canva/app-sdk";
 
 registerApp({
   render: () => {
