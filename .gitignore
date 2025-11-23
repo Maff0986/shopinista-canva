@@ -1,5 +1,7 @@
-node_modules
-dist
-public/main.min.js
-.DS_Store
+node_modules/
+dist/
+.vite/
 .env
+*.log
+package.json.bak
+clean-shopinista.ps1
