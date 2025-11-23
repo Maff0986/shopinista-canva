@@ -1,10 +1,40 @@
-import React from "react";
-import CanvaIntegration from "./components/CanvaIntegration";
+import {
+  prepareEditDesignIntent,
+  registerEditDesignRender,
+} from "@canva/edit_design";
+import {
+  registerCreateDesignButton,
+  ui,
+} from "@canva/app-ui";
 
-export default function App() {
-  return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-      <CanvaIntegration />
-    </div>
-  );
-}
+// --------------------------------------------------------
+// 1. PREPARAR INTENTS EN LOAD
+// --------------------------------------------------------
+prepareEditDesignIntent();
+
+// --------------------------------------------------------
+// 2. REGISTRAR ACCIÓN "render" DEL INTENTO
+// --------------------------------------------------------
+registerEditDesignRender(async () => {
+  // Aquí generas tu recurso, imagen, plantilla, etc.
+  const generatedAsset = await ui.createImage({
+    width: 1080,
+    height: 1080,
+    content: "<svg>...</svg>",
+  });
+
+  return {
+    type: "SUCCESS",
+    assets: [generatedAsset],
+  };
+});
+
+// --------------------------------------------------------
+// 3. REGISTRAR UI PRINCIPAL (Panel o Modal)
+// --------------------------------------------------------
+registerCreateDesignButton(async () => {
+  ui.openPanel({
+    template: "editor",
+    data: { message: "Configuración Canva lista" },
+  });
+});

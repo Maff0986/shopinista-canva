@@ -1,49 +1,47 @@
-import { registerApp } from "@canva/app-sdk";
+// src/main.jsx
+import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
 
-registerApp({
-  render: () => {
-    console.log("🛋️ Shopinista Canva App iniciada");
+// Attempt to import Canva intents only when available
+let prepareEditDesign = null;
+try {
+  // In production inside Canva, @canva/intents will be available
+  // In plain web preview, this import may fail; we fall back gracefully
+  ({ prepareEditDesign } = await import("@canva/intents"));
+} catch {
+  // No-op: running in web preview
+}
 
-    // Esperar a que el SDK esté disponible
-    if (typeof window === "undefined" || !window.canva) {
-      console.log("⚠️ SDK de Canva no disponible");
-      return;
-    }
+// Helper: mount React with normalized props
+function mount({ payload, env }) {
+  const rootEl = document.getElementById("root");
+  const root = createRoot(rootEl);
+  root.render(<App payload={payload} env={env} />);
+}
 
-    // Registrar acción principal
-    window.canva.on("edit_design:render", async (ctx) => {
-      console.log("🧠 Actividad edit_design:render activada");
-
-      const confirmImport = confirm("¿Deseas importar productos de Tiendanube a tu diseño?");
-      if (!confirmImport) return { ok: false };
-
-      const feedURL = "https://shopinistameta.com/feed.json";
-
-      try {
-        const res = await fetch(feedURL);
-        if (!res.ok) throw new Error("No se pudo obtener el feed");
-
-        const products = await res.json();
-        console.log("🪄 Productos cargados:", products.length);
-
-        const content = products.slice(0, 5).map(p => ({
-          type: "IMAGE",
-          src: p.image || "https://cdn.shopify.com/s/files/1/0883/3135/4415/files/default_product.png",
-          alt: p.title,
-          url: p.url
-        }));
-
-        console.log("📦 Contenido preparado:", content);
-        return { ok: true, data: content };
-      } catch (err) {
-        console.error("❌ Error al importar productos:", err);
-        return { ok: false };
-      }
-    });
-
-    // Acción informativa opcional
-    window.canva.on("app:ready", () => {
-      console.log("✅ Shopinista Canva App lista para usar");
-    });
-  }
-});
+// Canva runtime: register edit_design intent with render
+if (prepareEditDesign) {
+  prepareEditDesign({
+    // Render is mandatory; Canva checks this lifecycle action
+    render: (context) => {
+      // context includes design operations (insertText, insertImage, etc.)
+      // Pass the full context as payload for App to call context.design.*
+      mount({ payload: context, env: "canva" });
+    },
+  });
+} else {
+  // Web preview runtime: simulate minimal payload and design API
+  const mockPayload = {
+    designId: "web-preview",
+    design: {
+      insertText: async ({ content, fontSize }) => {
+        console.log("[WEB PREVIEW] insertText", { content, fontSize });
+      },
+      insertImage: async ({ src }) => {
+        console.log("[WEB PREVIEW] insertImage", { src });
+      },
+    },
+  };
+  mount({ payload: mockPayload, env: "web" });
+}

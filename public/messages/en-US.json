@@ -1,18 +1,4 @@
 {
-  "app.title": {
-    "defaultMessage": "Shopinista Canva App",
-    "description": "Main application title visible in the app list"
-  },
-  "ui.generate": {
-    "defaultMessage": "Generate design",
-    "description": "Button text to generate a design"
-  },
-  "ui.upload_image": {
-    "defaultMessage": "Import image from URL",
-    "description": "Label for image import input"
-  },
-  "ui.connect_feed": {
-    "defaultMessage": "Connect feed",
-    "description": "Button text to connect a data feed"
-  }
+  "hello": "Hello World",
+  "loading": "Loading..."
 }

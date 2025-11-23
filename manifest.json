@@ -1,27 +1,11 @@
 {
-  "name": "Shopinista Canva Integration",
-  "description": "...",
-  "version": "1.0.3",
-  "manifest_version": 1,
-  "icon": {
-    "dark": "...",
-    "light": "..."
+  "name": "Shopinista Canva Creator",
+  "version": "1.0.0",
+  "description": "App para generar variantes de diseño desde feeds CSV/Sheets",
+  "runtime": {
+    "src": "assets/index-CZMksTAi.js"
   },
-  "base_url": "http://localhost:8080",
-  "activities": [
-    {
-      "activity": "edit_design:render",
-      "url": "/app.js"
-    }
-  ],
-  "permissions": {
-    "network": {
-      "urls": ["*"]
-    }
-  },
-  "developer": {
-    "name": "Shopinista",
-    "website": "https://shopinista.com",
-    "email": "support@shopinista.com"
-  }
+  "intents": [
+    "edit_design:render"
+  ]
 }

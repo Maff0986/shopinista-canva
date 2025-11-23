@@ -1,5 +1,20 @@
+import { register } from "@canva/app-ui-kit";
+import { prepareEditDesignAppIntent } from "@canva/intents";
 import { mockCanva } from "../src/utils/mockCanvaSDK.js";
 
+prepareEditDesignAppIntent({
+  render: (root) => {
+    root.innerHTML = `
+      <div style="font-family: Arial, text-align: center; padding: 40px;">
+        <h1 style="font-size: 1.8rem;">🛋️ Shopinista Canva Integration</h1>
+        <p style="font-size: 1.1rem;">Tu app está conectada correctamente al entorno de Canva.</p>
+        <p style="margin-top: 10px;">Puedes generar y sincronizar recursos desde CSV, URLs o tus feeds.</p>
+      </div>
+    `;
+  }
+});
+
+register();
 (async () => {
   console.log("🚀 Iniciando Shopinista Canva App...");
 

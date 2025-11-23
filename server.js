@@ -1,9 +1,18 @@
 import express from "express";
-const app = express();
-const PORT = 8080;
+import { fileURLToPath } from "url";
+import path from "path";
 
-app.use(express.static("public")); // sirve app.js, index.html, etc.
+const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PORT = process.env.PORT || 8080;
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
 app.listen(PORT, () => {
-  console.log(`Servidor activo en http://localhost:8080;
+  console.log(`Shopinista Canva local server running: http://localhost:${PORT}`);
 });

@@ -1,11 +1,9 @@
-import { defineConfig } from "vite";
-
-export default defineConfig({
-  build: {
-    rollupOptions: {
-      input: "src/canva-app.ts",
-      external: ["@canva/app-sdk"]
-    },
-    outDir: "dist"
+server: {
+  port: 8080,
+  open: true,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Cross-Origin-Embedder-Policy': 'unsafe-none',
+    'Cross-Origin-Opener-Policy': 'unsafe-none'
   }
-});
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Shopinista Canva App",
+  "short_name": "Shopinista",
+  "display": "standalone",
+  "start_url": "/index.html",
+  "icons": [
+    { "src": "/icons/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/icons/icon-64.png", "sizes": "64x64", "type": "image/png" }
+  ]
+}
