@@ -1,13 +1,8 @@
-export function prepareDesignEditor(impl) {
-  prepareDesignEditor._impl = impl;
-  prepareDesignEditor._triggerLocalRender = async (rootElement, payload) => {
-    const mockPayload = {
-      ...payload,
-      design: {
-        insertText: async ({ content }) => console.log('[MOCK] insertText:', content),
-        insertImage: async ({ src }) => console.log('[MOCK] insertImage:', src)
-      }
-    };
-    await impl.render(rootElement, mockPayload);
-  };
-}
+export default {
+  designId: "web-preview",
+  design: {
+    insertText: async (p) => console.log("[WEB] insertText", p),
+    insertImage: async (p) => console.log("[WEB] insertImage", p),
+  },
+  editor: { notify: async (m) => console.log("[WEB] notify", m) },
+};

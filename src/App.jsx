@@ -1,148 +1,158 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { generateCopyVariants } from './ai/rules.js';
-import { loadFeed } from './feed.js';
+// src/App.jsx
+import React, { useState } from "react";
+import {
+  Button,
+  Text,
+  TextField,
+  Select,
+  Option,
+  Divider,
+  Inline,
+  Stack,
+  Title,
+  Tabs,
+  Tab,
+  IconButton,
+  ColorSwatch,
+} from "@canva/app-ui-kit";
+
+// Ejemplos de imágenes para el carrusel
+const sampleImages = [
+  { id: "1", src: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&auto=format" },
+  { id: "2", src: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800&auto=format" },
+  { id: "3", src: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?w=800&auto=format" },
+];
+
+// Paleta de colores
+const palette = ["#0A6EFF", "#00C853", "#FF4081", "#FFC107", "#263238"];
 
 export default function App({ payload, env }) {
-  const [status, setStatus] = useState('idle');
-  const [rows, setRows] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const current = rows[selectedIndex] || {};
+  const [tab, setTab] = useState("images");
+  const [prompt, setPrompt] = useState("Ideas de headline para Sofá Orion");
+  const [tone, setTone] = useState("friendly");
+  const [status, setStatus] = useState("Listo");
+  const [color, setColor] = useState(palette[0]);
 
-  useEffect(() => {
-    (async () => {
-      setStatus('Cargando feed...');
-      const data = await loadFeed({ payload }).catch(() => []);
-      setRows(data);
-      setStatus(`Feed cargado (${data.length} filas)`);
-    })();
-  }, [payload]);
+  const canva = env === "canva";
 
-  const variants = useMemo(() => {
-    if (!current?.name) return [];
-    return generateCopyVariants(current);
-  }, [current]);
+  // Estado del carrusel
+  const [index, setIndex] = useState(0);
+  const image = sampleImages[index];
+  const next = () => setIndex((i) => (i + 1) % sampleImages.length);
+  const prev = () => setIndex((i) => (i - 1 + sampleImages.length) % sampleImages.length);
 
-  const metrics = {
-    totalProducts: rows.length,
-    totalVariants: variants.length,
-    lastUpdated: new Date().toLocaleString('es-MX')
-  };
-
-  const insertText = async () => {
-    setStatus('Insertando texto...');
+  // Acción: insertar imagen
+  async function insertSelectedImage() {
+    setStatus("Insertando imagen...");
     try {
-      await payload?.design?.insertText?.({
-        content: `${current.name} — ${current.price}`,
-        fontSize: 24
-      });
-      setStatus('Texto insertado ✅');
+      await payload?.design?.insertImage?.({ src: image.src });
+      await payload?.editor?.notify?.("Imagen insertada ✅");
+      setStatus("Imagen insertada");
     } catch {
-      setStatus('Preview web/local: texto simulado ✅');
+      setStatus("Preview web: imagen simulada ✅");
     }
-  };
+  }
 
-  const insertImage = async () => {
-    setStatus('Insertando imagen...');
+  // Acción: generar texto IA
+  async function insertGeneratedText() {
+    setStatus("Generando texto con IA...");
+    const ideas = [
+      "Sofá Orion: comodidad moderna que abraza tu estilo.",
+      "Diseño que invita a quedarse: Orion en tu sala.",
+      "Eleva tu espacio con la línea Orion.",
+    ];
+    const chosen = ideas[Math.floor(Math.random() * ideas.length)];
+    const content = tone === "friendly" ? `${chosen} 😊` : chosen;
     try {
-      await payload?.design?.insertImage?.({ src: current.image_url });
-      setStatus('Imagen insertada ✅');
+      await payload?.design?.insertText?.({ content, fontSize: 28 });
+      await payload?.editor?.notify?.("Texto insertado ✅");
+      setStatus("Texto insertado");
     } catch {
-      setStatus('Preview web/local: imagen simulada ✅');
+      setStatus("Preview web: texto simulado ✅");
     }
-  };
+  }
 
-  const bulkGenerate = async () => {
-    setStatus('Generando en masa...');
+  // Acción: aplicar color
+  async function applyAccentColor() {
+    setStatus("Aplicando color...");
     try {
-      for (const row of rows.slice(0, 20)) {
-        await payload?.design?.insertText?.({
-          content: `${row.name} — ${row.price}`,
-          fontSize: 22
-        });
-        await payload?.design?.insertImage?.({ src: row.image_url });
-      }
-      setStatus('Bulk listo ✅');
+      await payload?.editor?.notify?.(`Color aplicado: ${color}`);
+      setStatus("Color aplicado");
     } catch {
-      setStatus('Preview web/local: bulk simulado ✅');
+      setStatus("Preview web: color simulado ✅");
     }
-  };
+  }
 
   return (
-    <main className="min-h-screen flex flex-col gap-4 p-6 bg-neutral-50 text-neutral-800">
-      <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Shopinista Canva Creator</h1>
-        <span className="text-sm">Entorno: {env} | Diseño: {payload?.designId || 'N/A'}</span>
-      </header>
+    <Stack space="large" padding="large">
+      <Title>Shopinista Canva</Title>
+      <Text>Entorno: {env} · Diseño: {payload?.designId ?? "N/A"}</Text>
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-1 bg-white rounded shadow p-4">
-          <h2 className="font-semibold mb-2">Productos</h2>
-          <div className="space-y-2 max-h-96 overflow-auto">
-            {rows.map((r, i) => (
-              <button
-                key={i}
-                className={
-                  'w-full flex items-center gap-3 p-2 rounded border ' +
-                  (i === selectedIndex ? 'border-primary' : 'border-transparent')
-                }
-                onClick={() => setSelectedIndex(i)}
-              >
-                <img src={r.image_url} alt="prev" className="w-12 h-12 object-cover rounded border" />
-                <div className="text-left">
-                  <div className="text-sm font-semibold">{r.name}</div>
-                  <div className="text-xs text-neutral-600">
-                    {r.price} • {r.category}
-                  </div>
-                </div>
-              </button>
+      <Tabs value={tab} onChange={setTab}>
+        <Tab value="images" label="Imágenes" />
+        <Tab value="text" label="Texto IA" />
+        <Tab value="colors" label="Colores" />
+      </Tabs>
+
+      {tab === "images" && (
+        <Stack space="medium">
+          <Inline space="small" align="center">
+            <IconButton icon="chevronLeft" aria-label="Anterior" onClick={prev} />
+            <img
+              src={image.src}
+              alt="Preview"
+              style={{
+                width: "100%",
+                maxHeight: 240,
+                objectFit: "cover",
+                borderRadius: 12,
+                boxShadow: "0 6px 16px rgba(0,0,0,0.12)",
+              }}
+            />
+            <IconButton icon="chevronRight" aria-label="Siguiente" onClick={next} />
+          </Inline>
+          <Button variant="primary" onClick={insertSelectedImage}>
+            Insertar imagen seleccionada
+          </Button>
+        </Stack>
+      )}
+
+      {tab === "text" && (
+        <Stack space="medium">
+          <TextField label="Prompt" value={prompt} onChange={setPrompt} />
+          <Select label="Tono" value={tone} onChange={setTone}>
+            <Option value="friendly">Amigable</Option>
+            <Option value="premium">Premium</Option>
+            <Option value="direct">Directo</Option>
+          </Select>
+          <Button variant="primary" onClick={insertGeneratedText}>
+            Generar e insertar texto
+          </Button>
+        </Stack>
+      )}
+
+      {tab === "colors" && (
+        <Stack space="small">
+          <Inline space="small" wrap>
+            {palette.map((c) => (
+              <ColorSwatch
+                key={c}
+                color={c}
+                selected={c === color}
+                onClick={() => setColor(c)}
+                aria-label={`Color ${c}`}
+              />
             ))}
-          </div>
-        </div>
+          </Inline>
+          <Button variant="secondary" onClick={applyAccentColor}>
+            Aplicar color de acento
+          </Button>
+        </Stack>
+      )}
 
-        <div className="md:col-span-1 bg-white rounded shadow p-4">
-          <h2 className="font-semibold mb-2">Previsualización</h2>
-          <div className="flex gap-4">
-            <img src={current.image_url} alt="preview" className="w-28 h-28 object-cover rounded border" />
-            <div>
-              <p><strong>Nombre:</strong> {current.name}</p>
-              <p><strong>Precio:</strong> {current.price}</p>
-              <p className="text-xs"><strong>Descripción:</strong> {current.description}</p>
-              <p className="text-xs"><strong>SKU:</strong> {current.sku}</p>
-              <p className="text-xs"><strong>Categoría:</strong> {current.category}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="md:col-span-1 bg-white rounded shadow p-4">
-          <h2 className="font-semibold mb-2">Variantes (IA sin costo)</h2>
-          <ul className="list-disc pl-5 text-sm">
-            {variants.map((v, i) => (
-              <li key={i}>{v}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="flex gap-3">
-        <button className="bg-primary text-white px-3 py-2 rounded" onClick={insertText}>Insertar texto</button>
-        <button className="bg-green-600 text-white px-3 py-2 rounded" onClick={insertImage}>Insertar imagen</button>
-        <button className="bg-secondary text-white px-3 py-2 rounded" onClick={bulkGenerate}>Generar en masa (20)</button>
-      </section>
-
-      <section className="bg-white rounded shadow p-4">
-        <h2 className="font-semibold mb-2">Métricas</h2>
-        <p className="text-sm">Productos cargados: {metrics.totalProducts}</p>
-        <p className="text-sm">Variantes generadas: {metrics.totalVariants}</p>
-        <p className="text-sm">Última actualización: {metrics.lastUpdated}</p>
-      </section>
-
-      <section className="bg-white rounded shadow p-4">
-        <h2 className="font-semibold mb-2">Estado y payload</h2>
-        <p className="text-sm">Estado: {status}</p>
-        <pre className="text-xs bg-gray-100 p-2 rounded overflow-x-auto">
-          {JSON.stringify(payload, null, 2)}
-        </pre>
-      </section>
-    </main>
+      <Divider />
+      <Text emphasize>Estado: {status}</Text>
+      {!canva && <Text>Estás en modo preview web. Las acciones se simulan en consola.</Text>}
+    </Stack>
   );
 }

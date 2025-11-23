@@ -1,17 +1,15 @@
 function formatPrice(p) {
   if (!p) return '';
   const n = Number(String(p).replace(/[^0-9.]/g, ''));
-  return isFinite(n)
-    ? new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(n)
-    : p;
+  return isFinite(n) ? new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(n) : p;
 }
 
 const headlineTemplates = [
-  ({ name, price }) => `Descubre ${name} por solo ${formatPrice(price)}`,
-  ({ name }) => `${name}: diseño que eleva tu espacio`,
-  ({ name, description }) => `${name} — ${description}`,
-  ({ name, price }) => `Oferta: ${name} a ${formatPrice(price)} hoy`,
-  ({ name }) => `Convierte tu hogar con ${name}`,
+  ({ name, price }) => \Descubre \ por solo \\,
+  ({ name }) => \\: diseño que eleva tu espacio\,
+  ({ name, description }) => \\ — \\,
+  ({ name, price }) => \Oferta: \ a \ hoy\,
+  ({ name }) => \Convierte tu hogar con \\,
 ];
 
 const hashtags = (category) => {
@@ -25,18 +23,13 @@ const hashtags = (category) => {
 };
 
 export function generateCopyVariants({ name, price, description, category }) {
-  const base = {
-    name: name || 'Producto',
-    price: price || '',
-    description: description || '',
-    category: category || ''
-  };
+  const base = { name: name || 'Producto', price: price || '', description: description || '', category: category || '' };
   const unique = new Set();
   for (const t of headlineTemplates) unique.add(t(base));
-  unique.add(`${base.name} | Envío rápido`);
-  unique.add(`${base.name} | Garantía de satisfacción`);
-  unique.add(`${base.name} | Stock limitado`);
+  unique.add(\\ | Envío rápido\);
+  unique.add(\\ | Garantía de satisfacción\);
+  unique.add(\\ | Stock limitado\);
   const tags = hashtags(base.category).join(' ');
-  unique.add(`Compra hoy: ${base.name} ${tags}`);
+  unique.add(\Compra hoy: \ \\);
   return Array.from(unique);
 }

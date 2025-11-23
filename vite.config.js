@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
@@ -7,31 +7,29 @@ export default defineConfig({
     port: 8080,
     open: true,
     headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Cross-Origin-Embedder-Policy': 'unsafe-none',
-      'Cross-Origin-Opener-Policy': 'unsafe-none'
+      "Access-Control-Allow-Origin": "*",
+      "Cross-Origin-Embedder-Policy": "unsafe-none",
+      "Cross-Origin-Opener-Policy": "unsafe-none"
     },
     hmr: { overlay: false }
   },
   build: {
     sourcemap: false,
-    outDir: 'dist',
+    outDir: "dist",
     rollupOptions: {
       external: [
-        '@canva/bridge',
-        '@canva/app-ui-kit',
-        '@canva/design',
-        '@canva/intents',
-        '@canva/intents/design'
+        "@canva/bridge",
+        "@canva/app-ui-kit",
+        "@canva/design",
+        "@canva/intents",
+        "@canva/intents/design",
+        "@canva/user"
       ],
       output: {
-        entryFileNames: 'assets/[name]-[hash].js',
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name]-[hash].[ext]'
+        entryFileNames: "assets/[name]-[hash].js",
+        chunkFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]"
       }
     }
-  },
-  css: {
-    postcss: './postcss.config.js'
   }
 });
