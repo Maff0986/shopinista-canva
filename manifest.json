@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "App para generar variantes de diseño desde feeds CSV/Sheets",
   "runtime": {
-    "src": "assets/index-ufKmXtPo.js"
+    "src": "assets/index-0N66rPOh.js"
   },
   "intents": [
     "edit_design:render"

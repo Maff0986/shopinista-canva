@@ -1,0 +1,20 @@
+﻿{
+  "name": "Shopinista Canva",
+  "app_id": "auto",
+  "version": "1.0.0",
+  "ui": {
+    "main": {
+      "url": "https://maff0986.github.io/app-shopinistameta-canva/"
+    }
+  },
+  "activity_actions": {
+    "edit_design": {
+      "render": {
+        "url": "https://maff0986.github.io/app-shopinistameta-canva/"
+      }
+    }
+  },
+  "permissions": {
+    "design": {}
+  }
+}
