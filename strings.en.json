@@ -1,0 +1,38 @@
+{
+  "app.name": {
+    "defaultMessage": "New_App_Canva",
+    "description": "Application display name shown in Canva"
+  },
+  "app.description": {
+    "defaultMessage": "Data connector for ShopinistaMeta feeds, enabling secure data access and high-fidelity content workflows.",
+    "description": "Short description of the app for listings and tooltips"
+  },
+  "button.connect": {
+    "defaultMessage": "Connect",
+    "description": "Primary action to start authentication and link the user account"
+  },
+  "button.disconnect": {
+    "defaultMessage": "Disconnect",
+    "description": "Action to remove the current authentication/session"
+  },
+  "error.auth": {
+    "defaultMessage": "Authentication required",
+    "description": "Error message shown when the user needs to authenticate before proceeding"
+  },
+  "list.search.placeholder": {
+    "defaultMessage": "Search products, categories, or IDs",
+    "description": "Placeholder text for the search input in the data view"
+  },
+  "list.empty": {
+    "defaultMessage": "No results found",
+    "description": "Message shown when a query returns no data"
+  },
+  "status.loading": {
+    "defaultMessage": "Loading data…",
+    "description": "Status text while fetching data from the connector"
+  },
+  "status.ready": {
+    "defaultMessage": "Ready",
+    "description": "Status text when the connector has loaded and is interactive"
+  }
+}

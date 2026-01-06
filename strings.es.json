@@ -1,0 +1,17 @@
+{
+  "app.name": {
+    "message": "New_App_Canva"
+  },
+  "app.description": {
+    "message": "Conector de datos para ShopinistaMeta"
+  },
+  "button.connect": {
+    "message": "Conectar"
+  },
+  "button.disconnect": {
+    "message": "Desconectar"
+  },
+  "error.auth": {
+    "message": "Autenticación requerida"
+  }
+}

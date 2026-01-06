@@ -1,0 +1,38 @@
+{
+  "app.name": {
+    "defaultMessage": "New_App_Canva",
+    "description": "Nombre de la aplicación mostrado en Canva"
+  },
+  "app.description": {
+    "defaultMessage": "Conector de datos para feeds de ShopinistaMeta, con acceso seguro y flujos de contenido de alta fidelidad.",
+    "description": "Descripción corta de la app para listados y tooltips"
+  },
+  "button.connect": {
+    "defaultMessage": "Conectar",
+    "description": "Acción principal para iniciar la autenticación y vincular la cuenta del usuario"
+  },
+  "button.disconnect": {
+    "defaultMessage": "Desconectar",
+    "description": "Acción para eliminar la autenticación/sesión actual"
+  },
+  "error.auth": {
+    "defaultMessage": "Autenticación requerida",
+    "description": "Mensaje de error cuando el usuario necesita autenticarse antes de continuar"
+  },
+  "list.search.placeholder": {
+    "defaultMessage": "Busca productos, categorías o IDs",
+    "description": "Texto placeholder para el buscador en la vista de datos"
+  },
+  "list.empty": {
+    "defaultMessage": "Sin resultados",
+    "description": "Mensaje mostrado cuando una consulta no devuelve datos"
+  },
+  "status.loading": {
+    "defaultMessage": "Cargando datos…",
+    "description": "Texto de estado mientras se obtienen datos del conector"
+  },
+  "status.ready": {
+    "defaultMessage": "Listo",
+    "description": "Texto de estado cuando el conector cargó y es interactivo"
+  }
+}
